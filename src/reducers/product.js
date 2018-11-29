@@ -1,4 +1,4 @@
-import { GET_PRODUCTS } from "../actionTypes/product";
+import { GET_PRODUCTS, SALE } from "../actionTypes/product";
 
 export default function productReducer(
   prevState = { products: [], offers: [], sales: [], customers: [] },
@@ -29,6 +29,13 @@ export default function productReducer(
           }
         ]
       };
+    case SALE:
+      let index = prevState.products.findIndex(p => p.id === action.id);
+      let newProduct = { ...prevState.products[index] };
+      newProduct.stock--;
+      prevState.products[index] = newProduct;
+      return { ...prevState, products: [...prevState.products] };
+
     default:
       return prevState;
   }

@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import ProductListItem from "./ProductListItem";
 import { connect } from "react-redux";
-import { getProductsActionCreator } from "../actionCreators/product";
+import {
+  getProductsActionCreator,
+  saleActionCreator
+} from "../actionCreators/product";
 class ProductList extends Component {
   constructor(props) {
     super(props);
@@ -10,11 +13,12 @@ class ProductList extends Component {
   }
 
   onSale(id) {
-    let index = this.state.products.findIndex(p => p.id === id);
-    let newProduct = { ...this.state.products[index] };
-    newProduct.stock--;
-    this.state.products[index] = newProduct;
-    this.setState({ products: this.state.products });
+    this.props.onSale(id);
+    // let index = this.state.products.findIndex(p => p.id === id);
+    // let newProduct = { ...this.state.products[index] };
+    // newProduct.stock--;
+    // this.state.products[index] = newProduct;
+    // this.setState({ products: this.state.products });
   }
 
   _renderProducts() {
@@ -24,8 +28,7 @@ class ProductList extends Component {
   }
 
   componentDidMount() {
-    let action = getProductsActionCreator();
-    this.props.dispatchFromStore(action);
+    this.props.getProducts();
   }
 
   handleClick(e) {
@@ -49,13 +52,16 @@ class ProductList extends Component {
 
 function mapStateToProps(wholeApplicationState) {
   return {
-    products: wholeApplicationState.products
+    products: wholeApplicationState.products,
+    offers: wholeApplicationState.offers,
+    sales: wholeApplicationState.sales
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatchFromStore: dispatch
+    getProducts: () => dispatch(getProductsActionCreator()),
+    onSale: id => dispatch(saleActionCreator(id))
   };
 }
 
