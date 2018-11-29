@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.1/redux.js"></script>
+  </head>
+  <body>
+    <button id="inc">INC</button> <span id="res"></span>
+    <button id="dec">DEC</button>
+    <script>
+      const incAction = { type: "INC", by: 2 };
+      const decAction = { type: "DEC", by: 2 };
+
+      function counterReducer(prevState = { counter: 0 }, action) {
+        switch (action.type) {
+          case "INC":
+            return { counter: prevState.counter + action.by };
+          case "DEC":
+            return { counter: prevState.counter - action.by };
+          default:
+            return prevState;
+        }
+      }
+
+      const store = Redux.createStore(counterReducer);
+      store.subscribe(() => {
+        console.log(store.getState());
+        document.querySelector("#res").innerHTML = store.getState().counter;
+      });
+
+      document.querySelector("#inc").addEventListener("click", () => {
+        store.dispatch(incAction);
+      });
+
+      document.querySelector("#dec").addEventListener("click", () => {
+        store.dispatch(decAction);
+      });
+    </script>
+  </body>
+</html>

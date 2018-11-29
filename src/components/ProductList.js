@@ -1,31 +1,10 @@
 import React, { Component } from "react";
 import ProductListItem from "./ProductListItem";
-
+import { connect } from "react-redux";
+import { getProductsActionCreator } from "../actionCreators/product";
 class ProductList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      products: [
-        {
-          id: 1,
-          title: "iphone xs",
-          price: 1800,
-          stock: 20
-        },
-        {
-          id: 2,
-          title: "iphone xs max",
-          price: 2000,
-          stock: 20
-        },
-        {
-          id: 3,
-          title: "Pixel 3",
-          price: 1200,
-          stock: "20"
-        }
-      ]
-    };
     this.handleClick = this.handleClick.bind(this);
     this.onSale = this.onSale.bind(this);
   }
@@ -39,9 +18,14 @@ class ProductList extends Component {
   }
 
   _renderProducts() {
-    return this.state.products.map(p => (
+    return this.props.products.map(p => (
       <ProductListItem key={p.id} product={p} onSale={this.onSale} />
     ));
+  }
+
+  componentDidMount() {
+    let action = getProductsActionCreator();
+    this.props.dispatchFromStore(action);
   }
 
   handleClick(e) {
@@ -63,4 +47,20 @@ class ProductList extends Component {
   }
 }
 
-export default ProductList;
+function mapStateToProps(wholeApplicationState) {
+  return {
+    products: wholeApplicationState.products
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatchFromStore: dispatch
+  };
+}
+
+const connectMeToProvider = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
+export default connectMeToProvider(ProductList);
