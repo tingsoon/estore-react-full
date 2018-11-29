@@ -22,7 +22,7 @@ class ProductList extends Component {
           id: 3,
           title: "Pixel 3",
           price: 1200,
-          stock: 20
+          stock: "20"
         }
       ]
     };
@@ -32,7 +32,9 @@ class ProductList extends Component {
 
   onSale(id) {
     let index = this.state.products.findIndex(p => p.id === id);
-    this.state.products[index].stock--;
+    let newProduct = { ...this.state.products[index] };
+    newProduct.stock--;
+    this.state.products[index] = newProduct;
     this.setState({ products: this.state.products });
   }
 

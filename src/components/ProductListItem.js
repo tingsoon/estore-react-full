@@ -1,10 +1,17 @@
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
+import PropTypes from "prop-types";
 
-class ProductListItem extends Component {
+class ProductListItem extends PureComponent {
   constructor() {
     super();
     this.handleClick = this.handleClick.bind(this);
   }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   // console.log("nextProps", nextProps);
+  //   // console.log("this.props", this.props);``
+  //   return this.props.product != nextProps.product;
+  // }
 
   handleClick() {
     this.props.onSale(this.props.product.id);
@@ -15,7 +22,7 @@ class ProductListItem extends Component {
     return (
       <div>
         <h2>
-          {title}({stock})
+          {title}({stock}){new Date().toISOString()}
         </h2>
         <h2>{price}</h2>
         <button onClick={this.handleClick}>SELL</button>
@@ -23,5 +30,23 @@ class ProductListItem extends Component {
     );
   }
 }
+
+ProductListItem.propTypes = {
+  product: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    stock: PropTypes.number.isRequired
+  }),
+  onSale: PropTypes.func.isRequired
+};
+
+ProductListItem.defaultProps = {
+  product: {
+    id: 0,
+    title: "none",
+    price: -1,
+    stock: -1
+  }
+};
 
 export default ProductListItem;

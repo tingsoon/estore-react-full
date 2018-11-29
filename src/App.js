@@ -4,12 +4,14 @@ import "./App.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ProductList from "./components/ProductList";
+import AddProduct from "./components/AddProduct";
 
 class App extends Component {
   render() {
     return (
       <div className="App Header">
         <Header />
+        <AddProduct />
         <ProductList />
         <Footer />
       </div>
