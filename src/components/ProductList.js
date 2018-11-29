@@ -52,9 +52,9 @@ class ProductList extends Component {
 
 function mapStateToProps(wholeApplicationState) {
   return {
-    products: wholeApplicationState.products,
-    offers: wholeApplicationState.offers,
-    sales: wholeApplicationState.sales
+    products: wholeApplicationState.productState.get("products").toJS(),
+    offers: wholeApplicationState.productState.offers,
+    sales: wholeApplicationState.productState.sales
   };
 }
 
