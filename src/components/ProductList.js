@@ -44,6 +44,7 @@ class ProductList extends Component {
       <div>
         <button onClick={this.handleClick}>Add Product</button>
         <h1>Products</h1>
+        {this.props.isLoading && <p>Loading...</p>}
         {this._renderProducts()}
       </div>
     );
@@ -54,7 +55,8 @@ function mapStateToProps(wholeApplicationState) {
   return {
     products: wholeApplicationState.productState.get("products").toJS(),
     offers: wholeApplicationState.productState.offers,
-    sales: wholeApplicationState.productState.sales
+    sales: wholeApplicationState.productState.sales,
+    isLoading: wholeApplicationState.productState.get("isLoading")
   };
 }
 

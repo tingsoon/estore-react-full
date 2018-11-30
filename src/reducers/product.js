@@ -1,4 +1,8 @@
-import { GET_PRODUCTS, SALE } from "../actionTypes/product";
+import {
+  GET_PRODUCTS,
+  SALE,
+  GET_PRODUCTS_SUCCESS
+} from "../actionTypes/product";
 import { fromJS } from "immutable";
 
 export default function productReducer(
@@ -7,27 +11,11 @@ export default function productReducer(
 ) {
   switch (action.type) {
     case GET_PRODUCTS:
-      let products = fromJS([
-        {
-          id: 1,
-          title: "iphone xs",
-          price: 1800,
-          stock: 20
-        },
-        {
-          id: 2,
-          title: "iphone xs max",
-          price: 2000,
-          stock: 20
-        },
-        {
-          id: 3,
-          title: "Pixel 3",
-          price: 1200,
-          stock: "20"
-        }
-      ]);
-      return prevState.set("products", products);
+      return prevState.set("isLoading", true);
+    case GET_PRODUCTS_SUCCESS:
+      return prevState
+        .set("isLoading", false)
+        .set("products", fromJS(action.products));
 
     case SALE:
       let index = prevState.products.findIndex(p => p.id === action.id);
