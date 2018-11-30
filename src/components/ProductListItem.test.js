@@ -7,13 +7,14 @@ import { shallowToJson } from "enzyme-to-json";
 Enzyme.configure({ adapter: new Adapter() });
 
 describe("Product List Item", () => {
+  let wrapper, product, onSale;
+  beforeEach(() => {
+    product = { id: 100, title: "p1", price: 20, stock: 20 };
+    wrapper = shallow(<ProductListItem product={product} onSale={onSale} />);
+    onSale = jest.fn();
+  });
+
   it("should have props", () => {
-    const product = { id: 100, title: "p1", price: 20, stock: 20 };
-    debugger;
-    const onSale = jest.fn();
-    const wrapper = shallow(
-      <ProductListItem product={product} onSale={onSale} />
-    );
     console.log(
       wrapper
         .find("h2")
@@ -36,11 +37,6 @@ describe("Product List Item", () => {
   });
 
   it("should have snapshot", () => {
-    const product = { id: 100, title: "p1", price: 20, stock: 20 };
-    const onSale = jest.fn();
-    const wrapper = shallow(
-      <ProductListItem product={product} onSale={onSale} />
-    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });
