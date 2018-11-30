@@ -24,11 +24,11 @@ class ProductListItem extends PureComponent {
       <div>
         <h2>
           <Link to={`/products/${id}`}>
-            {title}({stock}){new Date().toISOString()}
+            {title}({stock})
           </Link>
         </h2>
         <h2>{price}</h2>
-        <button onClick={this.handleClick}>SELL</button>
+        <button onClick={this.handleClick}>Sell</button>
       </div>
     );
   }

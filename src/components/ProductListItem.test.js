@@ -2,6 +2,7 @@ import React from "react";
 import ProductListItem from "./ProductListItem";
 import Enzyme, { shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
+import { shallowToJson } from "enzyme-to-json";
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -32,5 +33,14 @@ describe("Product List Item", () => {
       .simulate("click");
     expect(onSale).toBeCalledTimes(1);
     expect(onSale).toBeCalledWith(100);
+  });
+
+  it("should have snapshot", () => {
+    const product = { id: 100, title: "p1", price: 20, stock: 20 };
+    const onSale = jest.fn();
+    const wrapper = shallow(
+      <ProductListItem product={product} onSale={onSale} />
+    );
+    expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });
