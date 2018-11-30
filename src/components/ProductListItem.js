@@ -1,5 +1,6 @@
 import React, { Component, PureComponent } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 class ProductListItem extends PureComponent {
   constructor() {
@@ -18,11 +19,13 @@ class ProductListItem extends PureComponent {
   }
 
   render() {
-    let { title, stock, price } = this.props.product;
+    let { title, stock, price, id } = this.props.product;
     return (
       <div>
         <h2>
-          {title}({stock}){new Date().toISOString()}
+          <Link to={`/products/${id}`}>
+            {title}({stock}){new Date().toISOString()}
+          </Link>
         </h2>
         <h2>{price}</h2>
         <button onClick={this.handleClick}>SELL</button>
