@@ -8,6 +8,7 @@ Enzyme.configure({ adapter: new Adapter() });
 describe("Product List Item", () => {
   it("should have props", () => {
     const product = { id: 100, title: "p1", price: 20, stock: 20 };
+    debugger;
     const onSale = jest.fn();
     const wrapper = shallow(
       <ProductListItem product={product} onSale={onSale} />
