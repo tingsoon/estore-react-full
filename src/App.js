@@ -5,11 +5,13 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ProductList from "./components/ProductList";
 import AddProduct from "./components/AddProduct";
-import { Route, Link, Switch } from "react-router-dom";
+import { Route, Link, Switch, Redirect } from "react-router-dom";
 import ProductDetail from "./components/ProductDetail";
+import Login from "./components/Login";
 
 class App extends Component {
   render() {
+    let isAdmin = true;
     return (
       <div className="App Header">
         <Header />
@@ -25,8 +27,18 @@ class App extends Component {
         </nav>
         <Switch>
           <Route exact path="/products" component={ProductList} />
-          <Route path="/products/add" component={AddProduct} />
+          <Route
+            path="/products/add"
+            render={props => {
+              return isAdmin ? (
+                <AddProduct {...props} extras={[]} />
+              ) : (
+                <Redirect to="/login" />
+              );
+            }}
+          />
           <Route path="/products/:id" component={ProductDetail} />
+          <Route path="/login" component={Login} />
           <Route render={() => <p>Not Found</p>} />
         </Switch>
         <Footer />
